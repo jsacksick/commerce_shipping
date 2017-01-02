@@ -6,3 +6,9 @@ services:
   plugin.manager.commerce_package_type:
     class: Drupal\commerce_shipping\PackageTypeManager
     arguments: ['@module_handler', '@cache.discovery']
+
+  commerce_shipping.order_canceled_subscriber:
+    class: Drupal\commerce_shipping\EventSubscriber\OrderCanceledSubscriber
+    arguments: ['@entity_type.manager', '@entity.query']
+    tags:
+      - { name: 'event_subscriber' }

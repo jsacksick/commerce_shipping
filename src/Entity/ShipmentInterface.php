@@ -2,6 +2,8 @@
 
 namespace Drupal\commerce_shipping\Entity;
 
+use Drupal\commerce_shipping\Plugin\Commerce\PackageType\PackageTypeInterface;
+use Drupal\commerce_shipping\ShipmentItem;
 use Drupal\commerce_order\EntityAdjustableInterface;
 use Drupal\commerce_price\Price;
 use Drupal\Core\Entity\ContentEntityInterface;
@@ -50,22 +52,30 @@ interface ShipmentInterface extends ContentEntityInterface, EntityAdjustableInte
   public function setShippingMethod(ShippingMethodInterface $shipping_method);
 
   /**
+   * Gets the shipment shipping service.
+   *
+   * @return string|null
+   *   The shipment shipping service, if available. NULL otherwise.
+   */
+  public function getShippingService();
+
+  /**
+   * Sets the shipment shipping service.
+   *
+   * @param string $shipping_service
+   *   The shipment shipping service.
+   *
+   * @return $this
+   */
+  public function setShippingService($shipping_service);
+
+  /**
    * Gets the shipping method ID.
    *
    * @return string|null
    *   The shipping method ID, or NULL if unknown.
    */
   public function getShippingMethodId();
-
-  /**
-   * Sets the shipping method ID.
-   *
-   * @param string $shipping_method_id
-   *   The shipping method ID.
-   *
-   * @return $this
-   */
-  public function setShippingMethodId($shipping_method_id);
 
   /**
    * Gets the shipping profile.
@@ -133,6 +143,32 @@ interface ShipmentInterface extends ContentEntityInterface, EntityAdjustableInte
   public function getState();
 
   /**
+   * Gets the shipment weight.
+   *
+   * @return \Drupal\physical\Weight|null
+   *   The shipment weight, or NULL if unknown.
+   */
+  public function getWeight();
+
+  /**
+   * Gets the package type.
+   *
+   * @return \Drupal\commerce_shipping\Plugin\Commerce\PackageType\PackageTypeInterface|null
+   *   The shipment package type, if available. NULL otherwise.
+   */
+  public function getPackageType();
+
+  /**
+   * Sets the package type.
+   *
+   * @param \Drupal\commerce_shipping\Plugin\Commerce\PackageType\PackageTypeInterface
+   *   The package type.
+   *
+   * @return $this
+   */
+  public function setPackageType(PackageTypeInterface $package_type);
+
+  /**
    * Gets the shipment creation timestamp.
    *
    * @return int
@@ -167,5 +203,43 @@ interface ShipmentInterface extends ContentEntityInterface, EntityAdjustableInte
    * @return $this
    */
   public function setShippedTime($timestamp);
+
+  /**
+   * Gets the shipment items.
+   *
+   * @return \Drupal\commerce_shipping\ShipmentItem[]
+   *   The shipment items.
+   */
+  public function getItems();
+
+  /**
+   * Sets the shipment items.
+   *
+   * @param \Drupal\commerce_shipping\ShipmentItem[] $shipment_items
+   *   The shipment items.
+   *
+   * @return $this
+   */
+  public function setItems(array $shipment_items);
+
+  /**
+   * Adds a shipment item.
+   *
+   * @param \Drupal\commerce_shipping\ShipmentItem $shipment_item
+   *   The shipment item.
+   *
+   * @return $this
+   */
+  public function addItem(ShipmentItem $shipment_item);
+
+  /**
+   * Removes a shipment item.
+   *
+   * @param \Drupal\commerce_shipping\ShipmentItem $shipment_item
+   *   The shipment item to remove.
+   *
+   * @return $this
+   */
+  public function removeItem(ShipmentItem $shipment_item);
 
 }
